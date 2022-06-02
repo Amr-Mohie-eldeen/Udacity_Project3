@@ -16,12 +16,16 @@
   become: true
   shell: |
     cd ~/backend-app
+    printenv
     npm i
 
 - name: "run server"
   become: true
   shell: |
     cd ~/backend-app/dist
+    pwd
+    ls -l
+    printenv
     pm2 stop default
     pm2 start main.js
   register: execute_node
