@@ -1,0 +1,34 @@
+---
+- name: "Create backend directory"
+  become: true
+  file:
+    path: ~/backend-app
+    state: directory
+
+    
+- name: "untar backend"
+  become: true
+  unarchive:
+    src: artifact.tar.gz
+    dest: ~/backend-app
+    recursive: true
+
+- name: "install Node.js Dependencies"
+  become: true
+  shell: |
+    cd ~/backend-app
+    npm i
+
+- name: "run server"
+  become: true
+  shell: |
+    cd ~/backend-app/dist
+    pm2 stop default
+    pm2 start main.js
+  register: execute_node
+
+- name: "print message"
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
+
+
