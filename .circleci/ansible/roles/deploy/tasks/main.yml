@@ -11,7 +11,6 @@
   unarchive:
     src: artifact.tar.gz
     dest: ~/backend-app
-    recursive: true
 
 - name: "install Node.js Dependencies"
   become: true
