@@ -241,7 +241,7 @@ jobs:
 
             npm install
             npm run migrations > migrations_dump.txt
-            cat migrations.txt
+            cat migrations_dump.txt
             
 
       - run:
