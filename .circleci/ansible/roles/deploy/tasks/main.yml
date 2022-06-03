@@ -1,46 +1,16 @@
 ---
-- name: "Create backend directory"
-  become: true
-  file:
-    path: ~/backend-app
-    state: directory
-
-    
-- name: "untar backend"
-  become: true
-  unarchive:
-    src: artifact.tar.gz
-    dest: ~/backend-app
-
-- name: "install Node.js Dependencies"
+- name: "Add Node.js from Nodesource"
   become: true
   shell: |
-    cd ~/backend-app
-    export TYPEORM_CONNECTION=postgres
-    export TYPEORM_PORT=5432
-    export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
-    export TYPEORM_USERNAME=postgres
-    export TYPEORM_DATABASE=glee
-    export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
-    export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-    export TYPEORM_MIGRATIONS=./migrations/*.ts
-    ls -l
-    printenv
-    npm i
-
-- name: "run server"
+    curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+- name: "Install Node.js 13"
   become: true
-  shell: |
-    cd ~/backend-app/dist
-    pwd
-    ls -l
-    printenv
-    pm2 stop default
-    pm2 start main.js
-  register: execute_node
+  apt:
+    name: ["nodejs"]
+    state: latest
+    update_cache: yes
 
-- name: "print message"
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
-
-
+- name: "Install PM2 Globally"
+  npm:
+    name: pm2
+    global: yes
