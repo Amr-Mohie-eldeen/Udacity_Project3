@@ -232,31 +232,25 @@ jobs:
       - checkout
       - install_awscli
       - install_node
-      - attach_workspace:
-          at: .
+      - restore_cache:
+          keys: [backend-deps]
       - run:
           name: Run migrations
           command: |
             cd backend
-            export TYPEORM_CONNECTION=postgres
-            export TYPEORM_PORT=5432
-            export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
-            export TYPEORM_USERNAME=postgres
-            export TYPEORM_DATABASE=glee
-            export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
-            export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-            export TYPEORM_MIGRATIONS=./migrations/*.ts
+
             npm install
-            npm run migrations 
+            npm run migrations > migrations_dump.txt
+            cat migrations.txt
             
 
-      # - run:
-      #     name: Send migration results to kvdb.io
-      #     command: |
-      #       if grep -q "has been executed sucessfully." ~/project/backend/migrations_dump.txt
-      #       then
-      #         curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
-      #       fi
+      - run:
+          name: Send migration results to kvdb.io
+          command: |
+            if grep -q "has been executed sucessfully." ~/project/backend/migrations_dump.txt
+            then
+              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+            fi
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
