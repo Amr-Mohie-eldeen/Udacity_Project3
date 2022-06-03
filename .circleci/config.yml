@@ -322,14 +322,7 @@ jobs:
           name: packge Backend
           command: |
             cd backend
-            export TYPEORM_CONNECTION=postgres
-            export TYPEORM_PORT=5432
-            export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
-            export TYPEORM_USERNAME=postgres
-            export TYPEORM_DATABASE=glee
-            export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
-            export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-            export TYPEORM_MIGRATIONS=./migrations/*.ts
+
             npm run build
             tar -czf artifact.tar.gz dist/* package*
             cd ..
@@ -338,17 +331,7 @@ jobs:
       - run:
           name: Deploy Backend
           command: |
-            export TYPEORM_MIGRATIONS_DIR=./migrations
-            export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-            export TYPEORM_MIGRATIONS=./migrations/*.ts
-            export TYPEORM_CONNECTION=postgres
-            export TYPEORM_PORT=5432
-            export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
-            export TYPEORM_USERNAME=postgres
-            export TYPEORM_DATABASE=glee
-            export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
-            export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-            export TYPEORM_MIGRATIONS=./migrations/*.ts
+
             echo $TYPEORM_MIGRATIONS
             cd .circleci/ansible
             cat inventory.txt

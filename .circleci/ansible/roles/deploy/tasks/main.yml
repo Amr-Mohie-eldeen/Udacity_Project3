@@ -17,26 +17,16 @@
   shell: |
     cd ~/backend-app
     export TYPEORM_CONNECTION=postgres
-      export TYPEORM_PORT=5432
-      export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
-      export TYPEORM_USERNAME=postgres
-      export TYPEORM_DATABASE=glee
-      export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
-      export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
-      export TYPEORM_MIGRATIONS=./migrations/*.ts
+    export TYPEORM_PORT=5432
+    export TYPEORM_HOST=udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com
+    export TYPEORM_USERNAME=postgres
+    export TYPEORM_DATABASE=glee
+    export TYPEORM_PASSWORD=LcSxJD6vhuwzjBJmnU7k
+    export TYPEORM_ENTITIES=./module/domain/**/*.entity{.ts,.js}
+    export TYPEORM_MIGRATIONS=./migrations/*.ts
     printenv
     npm i
-  environment:
-    ENV_TYPE: production
-    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
-    TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
-    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
-    TYPEORM_PORT: "5432"
-    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
-    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
-    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
-    TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
-    TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+
 - name: "run server"
   become: true
   shell: |
