@@ -239,12 +239,15 @@ jobs:
           command: |
             cd backend
             env
+            nc -zv udapeople-db.cv0pksnv18of.us-east-2.rds.amazonaws.com 5432
             npm install
             echo "-------------WILL RUN MIGRATION NOW--------"
             npm run migrations > migrations_dump.txt
             ls -l 
             pwd
+            echo "-------------Start migration.txt--------"
             cat migrations_dump.txt
+            echo "-------------END migration.txt--------"
             
 
       - run:
