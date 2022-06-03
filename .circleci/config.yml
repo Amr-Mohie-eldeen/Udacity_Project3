@@ -241,6 +241,8 @@ jobs:
 
             npm install
             npm run migrations > migrations_dump.txt
+            ls -l 
+            pwd
             cat migrations_dump.txt
             
 
@@ -250,6 +252,9 @@ jobs:
             if grep -q "has been executed sucessfully." ~/project/backend/migrations_dump.txt
             then
               curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+            else
+              echo "DB migration failed, please verify setup! Probably the database already exists. Verify setup!"
+              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d 'failed
             fi
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
