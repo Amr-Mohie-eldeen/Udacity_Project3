@@ -232,6 +232,8 @@ jobs:
       - checkout
       - install_awscli
       - install_node
+       - attach_workspace:
+          at: .
       - run:
           name: Run migrations
           command: |
