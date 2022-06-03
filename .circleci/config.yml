@@ -238,8 +238,9 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-
+            env
             npm install
+            echo "-------------WILL RUN MIGRATION NOW--------"
             npm run migrations > migrations_dump.txt
             ls -l 
             pwd
