@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'prometheus'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    ec2_sd_configs:
+      - region: us-east-2
+        port: 9100
+        filters:
+                - name: tag:Project
+                  values: [Udapeople]
+
+  relabel_configs:
+     - source_labels: ['__meta_ec2_tag_Name', '__meta_ec2_tag_Project']]
+       target_label: instance
